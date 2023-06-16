@@ -46,4 +46,13 @@ function getDayName(dateStr, locale) {
   return date.toLocaleDateString(locale, { weekday: 'short' });
 }
 
+function convertTemp(temp, targetUnit = 'Celsius') {
+  if (targetUnit === 'Celsius') {
+    return (temp - 32) * (5 / 9);
+  }
+  if (targetUnit === 'Fahrenheit') {
+    return temp * (9 / 5) + 32;
+  }
+}
+
 console.log(getDayName('2023-06-16', 'en-US'));
