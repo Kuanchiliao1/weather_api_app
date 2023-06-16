@@ -1,14 +1,28 @@
 import './styles.css';
 import _ from 'lodash';
 
-fetch(
-  'https://api.weatherapi.com/v1/forecast.json?key=a81041fdab664dca902173917231406&q=London&days=7&aqi=no&alerts=no'
-)
-  .then((res) => res.json())
-  .then((data) => {
-    const weekData = getWeekData(data);
-    console.log(getAllFormattedData(weekData, data));
-  });
+const formEl = document.getElementById('search-form');
+formEl.addEventListener('submit', (event) => {
+  event.preventDefault();
+  alert("here")
+  const inputEl = document.getElementById('search-input');
+
+  fetch(
+    `https://api.weatherapi.com/v1/forecast.json?key=a81041fdab664dca902173917231406&q=${inputEl.value}&days=7&aqi=no&alerts=no`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.error) {
+        throw new Error("No matching location found!")
+      }
+      console.log(data)
+      const weekData = getWeekData(data);
+      console.log(getAllFormattedData(weekData, data));
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+}); // Missing parenthesis was added here
 
 function getWeekData(data) {
   console.log(data);
