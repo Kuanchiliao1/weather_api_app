@@ -99,6 +99,13 @@ function getDayName(dateStr, locale) {
   return date.toLocaleDateString(locale, { weekday: 'short' });
 }
 
+function formatPropertyKey(key) {
+  return key
+    .split('_')
+    .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
 function convertTemp(temp, targetUnit = 'Celsius') {
   if (targetUnit === 'Celsius') {
     return (temp - 32) * (5 / 9);
