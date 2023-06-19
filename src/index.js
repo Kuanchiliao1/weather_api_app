@@ -4,7 +4,6 @@ import _ from 'lodash';
 const formEl = document.getElementById('search-form');
 formEl.addEventListener('submit', (event) => {
   event.preventDefault();
-  alert("here")
   const inputEl = document.getElementById('search-input');
 
   fetch(
@@ -13,14 +12,14 @@ formEl.addEventListener('submit', (event) => {
     .then((res) => res.json())
     .then((data) => {
       if (data.error) {
-        throw new Error("No matching location found!")
+        throw new Error('No matching location found!');
       }
-      console.log(data)
       const weekData = getWeekData(data);
       console.log(getAllFormattedData(weekData, data));
+      renderData(getAllFormattedData(weekData, data));
     })
     .catch((error) => {
-      console.log(error)
+      alert(error);
     });
 }); // Missing parenthesis was added here
 
@@ -67,7 +66,7 @@ function updateWeekdayContainer(data) {
 function getWeekData(data) {
   const weekDataArray = data.forecast.forecastday;
   console.log('array', weekDataArray);
-  return weekDataArray.map((dayData) => {
+  return weekDataArray.map((dayData, index) => {
     const dayName = getDayName(dayData.date, 'en-US');
     return {
       day_name: dayName,
@@ -77,6 +76,7 @@ function getWeekData(data) {
       max_temp: dayData.day.maxtemp_f,
       avg_temp: (dayData.day.maxtemp_f + dayData.day.mintemp_f) / 2,
       date: dayData.date,
+      active: index === 0,
     };
   });
 }
