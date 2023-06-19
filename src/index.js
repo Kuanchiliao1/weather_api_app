@@ -24,8 +24,47 @@ formEl.addEventListener('submit', (event) => {
     });
 }); // Missing parenthesis was added here
 
-function getWeekData(data) {
+function renderData(data) {
+  const tableBody = document.getElementById('weather-detail-table');
+
+  updateTable(data);
+  updateWeekdayContainer(data);
+
   console.log(data);
+  // weekdaysContainer.appendChild()
+}
+
+function updateTable(data) {}
+
+function updateWeekdayContainer(data) {
+  const weekdaysContainer = document.querySelector('.weekdays-container');
+
+  weekdaysContainer.innerHTML = '';
+
+  data.weekData.forEach((dayData) => {
+    const { min_temp, max_temp, icon_url } = dayData;
+    const weekdayContainer = document.createElement('button');
+    weekdayContainer.classList.add('weekday-container');
+    if (dayData.active) {
+      weekdayContainer.classList.add('active');
+    } else {
+      weekdayContainer.classList.remove('active');
+    }
+
+    const h2 = document.createElement('h2');
+    h2.textContent = min_temp;
+
+    const p = document.createElement('p');
+    p.textContent = max_temp;
+
+    weekdayContainer.append(h2, p);
+    weekdayContainer.style.backgroundImage = `url(${icon_url})`;
+
+    weekdaysContainer.append(weekdayContainer);
+  });
+}
+
+function getWeekData(data) {
   const weekDataArray = data.forecast.forecastday;
   console.log('array', weekDataArray);
   return weekDataArray.map((dayData) => {
