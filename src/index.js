@@ -42,10 +42,11 @@ function updateWeekdayContainer(data) {
 
   weekdaysContainer.innerHTML = '';
 
-  data.weekData.forEach((dayData) => {
+  data.weekData.forEach((dayData, index) => {
     const { min_temp, max_temp, icon_url } = dayData;
     const weekdayContainer = document.createElement('button');
     weekdayContainer.classList.add('weekday-container');
+    weekdayContainer.id = `tab-${index}`;
     if (dayData.active) {
       weekdayContainer.classList.add('active');
     } else {
