@@ -35,7 +35,30 @@ function renderData(data) {
   // weekdaysContainer.appendChild()
 }
 
-function updateTable(data) {}
+function updateTable() {
+  let activeIndex;
+  formattedData.weekData.forEach((dateData, index) => {
+    if (dateData.active) {
+      activeIndex = index;
+    }
+  });
+
+  const activeDay = formattedData.weekData[activeIndex];
+
+  // Insert values into the table...
+  const tableBody = document.querySelector('#weather-detail-table tbody');
+  tableBody.innerHTML = '';
+  for (const [key, value] of Object.entries(activeDay)) {
+    const row = document.createElement('tr');
+    const td1 = document.createElement('td');
+    td1.textContent = key;
+    const td2 = document.createElement('td');
+    td2.textContent = value;
+
+    row.append(td1, td2);
+    tableBody.append(row);
+  }
+}
 
 function updateWeekdayContainer(data) {
   const weekdaysContainer = document.querySelector('.weekdays-container');
@@ -130,6 +153,7 @@ function bindEventListeners() {
   weekdaysContainer.addEventListener('click', (event) => {
     setActiveTab(event.target.closest('button').id);
     updateWeekdayContainer(formattedData);
+    updateTable();
   });
 }
 
