@@ -23,11 +23,9 @@ formEl.addEventListener('submit', (event) => {
     .catch((error) => {
       alert(error);
     });
-}); // Missing parenthesis was added here
+});
 
 function renderData(data) {
-  const tableBody = document.getElementById('weather-detail-table');
-
   updateTable(data);
   updateWeekdayContainer(data);
 
@@ -117,6 +115,7 @@ function getAllFormattedData(weekData, data) {
     },
     weekData,
     location,
+    temp_unit: 'Fahrenheit',
   };
 }
 
@@ -134,10 +133,10 @@ function formatPropertyKey(key) {
 
 function convertTemp(temp, targetUnit = 'Celsius') {
   if (targetUnit === 'Celsius') {
-    return (temp - 32) * (5 / 9);
+    return ((temp - 32) * (5 / 9)).toFixed(2);
   }
   if (targetUnit === 'Fahrenheit') {
-    return temp * (9 / 5) + 32;
+    return (temp * (9 / 5) + 32).toFixed(2);
   }
 }
 
@@ -152,6 +151,26 @@ function bindEventListeners() {
   const weekdaysContainer = document.querySelector('.weekdays-container');
   weekdaysContainer.addEventListener('click', (event) => {
     setActiveTab(event.target.closest('button').id);
+    updateWeekdayContainer(formattedData);
+    updateTable();
+  });
+
+  const toggleBtn = document.querySelector('.toggle-units');
+  toggleBtn.addEventListener('click', () => {
+    const currentMode = formattedData.temp_unit;
+    formattedData.weekData.forEach((dayData) => {
+      for (const key of Object.keys(dayData)) {
+        if (key.match(/temp/)) {
+          if (currentMode === 'Fahrenheit') {
+            dayData[key] = convertTemp(dayData[key], 'Celsius');
+            formattedData.temp_unit = 'Celsius';
+          } else {
+            dayData[key] = convertTemp(dayData[key], 'Fahrenheit');
+            formattedData.temp_unit = 'Fahrenheit';
+          }
+        }
+      }
+    });
     updateWeekdayContainer(formattedData);
     updateTable();
   });
