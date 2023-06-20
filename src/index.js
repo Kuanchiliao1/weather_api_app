@@ -2,6 +2,8 @@ import './styles.css';
 import _ from 'lodash';
 
 const formEl = document.getElementById('search-form');
+let formattedData;
+
 formEl.addEventListener('submit', (event) => {
   event.preventDefault();
   const inputEl = document.getElementById('search-input');
@@ -15,8 +17,8 @@ formEl.addEventListener('submit', (event) => {
         throw new Error('No matching location found!');
       }
       const weekData = getWeekData(data);
-      console.log(getAllFormattedData(weekData, data));
-      renderData(getAllFormattedData(weekData, data));
+      formattedData = getAllFormattedData(weekData, data);
+      renderData(formattedData);
     })
     .catch((error) => {
       alert(error);
