@@ -115,4 +115,21 @@ function convertTemp(temp, targetUnit = 'Celsius') {
   }
 }
 
+function setActiveTab(tabId) {
+  const id = +tabId.split('-')[1];
+  formattedData.weekData.forEach((dayData, index) => {
+    dayData.active = index === id;
+  });
+}
+
+function bindEventListeners() {
+  const weekdaysContainer = document.querySelector('.weekdays-container');
+  weekdaysContainer.addEventListener('click', (event) => {
+    setActiveTab(event.target.closest('button').id);
+    updateWeekdayContainer(formattedData);
+  });
+}
+
+bindEventListeners();
+
 console.log(getDayName('2023-06-16', 'en-US'));
