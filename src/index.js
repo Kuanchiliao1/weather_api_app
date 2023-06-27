@@ -28,9 +28,6 @@ formEl.addEventListener('submit', (event) => {
 function renderData(data) {
   updateTable(data);
   updateWeekdayContainer(data);
-
-  console.log(data);
-  // weekdaysContainer.appendChild()
 }
 
 function updateTable() {
@@ -89,7 +86,6 @@ function updateWeekdayContainer(data) {
 
 function getWeekData(data) {
   const weekDataArray = data.forecast.forecastday;
-  console.log('array', weekDataArray);
   return weekDataArray.map((dayData, index) => {
     const dayName = getDayName(dayData.date, 'en-US');
     return {
@@ -177,5 +173,3 @@ function bindEventListeners() {
 }
 
 bindEventListeners();
-
-console.log(getDayName('2023-06-16', 'en-US'));
