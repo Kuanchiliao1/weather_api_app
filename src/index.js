@@ -67,8 +67,6 @@ function updateWeekdayContainer(data) {
     weekdayContainer.id = `tab-${index}`;
     if (dayData.active) {
       weekdayContainer.classList.add('active');
-    } else {
-      weekdayContainer.classList.remove('active');
     }
 
     const h2 = document.createElement('h2');
